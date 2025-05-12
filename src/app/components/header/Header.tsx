@@ -6,8 +6,10 @@ import { cookies } from "next/headers";
 import { verifyTokenForPage } from "@/app/utils/verifyToken";
 import LogOutButton from "./LogOutButton";
 
-const Header = () => {
-  const token = cookies().get("jwtToken")?.value || "";
+const Header = async () => {
+  const cookieStore = await cookies();
+
+  const token = cookieStore.get("jwtToken")?.value || "";
   const payload = verifyTokenForPage(token);
   //${module.header}
   return (
