@@ -17,8 +17,9 @@ interface Props {
 
 export async function DELETE(request: NextRequest, { params }: Props) {
   try {
+    const { id } = await params;
     const user = await prisma.user.findUnique({
-      where: { id: parseInt(params.id) },
+      where: { id: parseInt(id) },
       include: { comments: true },
     });
     if (!user) {
@@ -34,7 +35,7 @@ export async function DELETE(request: NextRequest, { params }: Props) {
 
     if (userFromToken != null && userFromToken.id === user.id) {
       // delete user
-      await prisma.user.delete({ where: { id: parseInt(params.id) } });
+      await prisma.user.delete({ where: { id: parseInt(id) } });
       // delete comments
       const commentIds: number[] = user?.comments.map((comment) => comment.id);
       await prisma.comment.deleteMany({ where: { id: { in: commentIds } } });
@@ -55,7 +56,7 @@ export async function DELETE(request: NextRequest, { params }: Props) {
     );
   } catch (err) {
     return NextResponse.json(
-      { message: "internal server error" },
+      { message: "internal server error", err },
       {
         status: 500,
       }
@@ -72,8 +73,10 @@ export async function DELETE(request: NextRequest, { params }: Props) {
 
 export async function GET(request: NextRequest, { params }: Props) {
   try {
+    const { id } = await params;
+
     const user = await prisma.user.findUnique({
-      where: { id: parseInt(params.id) },
+      where: { id: parseInt(id) },
       select: {
         id: true,
         email: true,
@@ -98,7 +101,7 @@ export async function GET(request: NextRequest, { params }: Props) {
     return NextResponse.json(user, { status: 200 });
   } catch (err) {
     return NextResponse.json(
-      { message: "internal server error" },
+      { message: "internal server error", err },
       {
         status: 500,
       }
@@ -115,8 +118,10 @@ export async function GET(request: NextRequest, { params }: Props) {
 
 export async function PUT(request: NextRequest, { params }: Props) {
   try {
+    const { id } = await params;
+
     const user = await prisma.user.findUnique({
-      where: { id: parseInt(params.id) },
+      where: { id: parseInt(id) },
       select: {
         id: true,
         email: true,
@@ -155,7 +160,7 @@ export async function PUT(request: NextRequest, { params }: Props) {
     }
 
     const updateUser = await prisma.user.update({
-      where: { id: parseInt(params.id) },
+      where: { id: parseInt(id) },
       data: {
         username: body.username,
         email: body.email,
@@ -165,7 +170,7 @@ export async function PUT(request: NextRequest, { params }: Props) {
     return NextResponse.json(updateUser, { status: 200 });
   } catch (err) {
     return NextResponse.json(
-      { message: "internal server error" },
+      { message: "internal server error", err },
       {
         status: 500,
       }

@@ -15,8 +15,9 @@ interface Props {
 
 export async function PUT(request: NextRequest, { params }: Props) {
   try {
+    const { id } = await params;
     const comment = await prisma.comment.findUnique({
-      where: { id: parseInt(params.id) },
+      where: { id: parseInt(id) },
     });
     if (!comment) {
       return NextResponse.json(
@@ -35,7 +36,7 @@ export async function PUT(request: NextRequest, { params }: Props) {
     }
     const body = (await request.json()) as updateCommentDto;
     const updatecomment = await prisma.comment.update({
-      where: { id: parseInt(params.id) },
+      where: { id: parseInt(id) },
       data: {
         text: body.text,
       },
@@ -43,7 +44,7 @@ export async function PUT(request: NextRequest, { params }: Props) {
     return NextResponse.json(updatecomment, { status: 201 });
   } catch (err) {
     return NextResponse.json(
-      { message: "internal server error" },
+      { message: "internal server error", err },
       {
         status: 500,
       }
@@ -60,8 +61,10 @@ export async function PUT(request: NextRequest, { params }: Props) {
 
 export async function DELETE(request: NextRequest, { params }: Props) {
   try {
+    const { id } = await params;
+
     const comment = await prisma.comment.findUnique({
-      where: { id: parseInt(params.id) },
+      where: { id: parseInt(id) },
     });
     if (!comment) {
       return NextResponse.json(
@@ -80,7 +83,7 @@ export async function DELETE(request: NextRequest, { params }: Props) {
       );
     }
     if (user.id === comment.userId || user.isAdmin) {
-      await prisma.comment.delete({ where: { id: parseInt(params.id) } });
+      await prisma.comment.delete({ where: { id: parseInt(id) } });
       return NextResponse.json(
         { message: "deleted successfully" },
         { status: 200 }
@@ -92,7 +95,7 @@ export async function DELETE(request: NextRequest, { params }: Props) {
     );
   } catch (err) {
     return NextResponse.json(
-      { message: "internal server error" },
+      { message: "internal server error", err },
       {
         status: 500,
       }

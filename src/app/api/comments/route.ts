@@ -82,7 +82,7 @@ export async function GET(request: NextRequest) {
     return NextResponse.json(comments, { status: 200 });
   } catch (err) {
     return NextResponse.json(
-      { message: "internal server error" },
+      { message: "internal server error",err },
       {
         status: 500,
       }

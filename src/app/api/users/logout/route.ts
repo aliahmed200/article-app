@@ -8,13 +8,15 @@ import { NextResponse, NextRequest } from "next/server";
  * @access public
  */
 
-export function GET(request: NextRequest) {
+export async function GET(request: NextRequest) {
   try {
-    cookies().delete("jwtToken");
+    const cookieStore = await cookies();
+
+    cookieStore.delete("jwtToken");
     return NextResponse.json({ message: "logout" }, { status: 200 });
   } catch (err) {
     return NextResponse.json(
-      { message: "internal server error" },
+      { message: "internal server error", err },
       { status: 500 }
     );
   }

@@ -15,9 +15,10 @@ interface Props {
 }
 
 export async function GET(request: NextRequest, { params }: Props) {
+  const { id } = await params;
   try {
     const article = await prisma.article.findUnique({
-      where: { id: parseInt(params.id) },
+      where: { id: parseInt(id) },
       include: {
         comments: {
           include: { user: { select: { username: true } } },
@@ -31,7 +32,7 @@ export async function GET(request: NextRequest, { params }: Props) {
     return NextResponse.json(article, { status: 200 });
   } catch (err) {
     return NextResponse.json(
-      { message: "internal server error" },
+      { message: "internal server error", err },
       { status: 500 }
     );
   }
@@ -40,11 +41,13 @@ export async function GET(request: NextRequest, { params }: Props) {
 /**
  * @method PUT
  * @route  ~/api/articles/:id
- * @desc   Update Articlegit 
+ * @desc   Update Articlegit
  * @access public
  */
 
 export async function PUT(request: NextRequest, { params }: Props) {
+  const { id } = await params;
+
   try {
     const user = verifyToken(request);
     if (user === null || user.isAdmin === false) {
@@ -57,7 +60,7 @@ export async function PUT(request: NextRequest, { params }: Props) {
     }
 
     const article = await prisma.article.findUnique({
-      where: { id: parseInt(params.id) },
+      where: { id: parseInt(id) },
     });
     if (!article) {
       return NextResponse.json("article not found", { status: 404 });
@@ -65,7 +68,7 @@ export async function PUT(request: NextRequest, { params }: Props) {
 
     const body = (await request.json()) as updateArticleDto;
     const updatedArticle = await prisma.article.update({
-      where: { id: parseInt(params.id) },
+      where: { id: parseInt(id) },
       data: {
         title: body.title,
         description: body.description,
@@ -76,7 +79,7 @@ export async function PUT(request: NextRequest, { params }: Props) {
     return NextResponse.json(updatedArticle, { status: 200 });
   } catch (err) {
     return NextResponse.json(
-      { message: "internal server error" },
+      { message: "internal server error", err },
       { status: 500 }
     );
   }
@@ -91,6 +94,8 @@ export async function PUT(request: NextRequest, { params }: Props) {
 
 export async function DELETE(request: NextRequest, { params }: Props) {
   try {
+    const { id } = await params;
+
     const user = verifyToken(request);
     if (user === null || user.isAdmin === false) {
       return NextResponse.json(
@@ -101,7 +106,7 @@ export async function DELETE(request: NextRequest, { params }: Props) {
       );
     }
     const article = await prisma.article.findUnique({
-      where: { id: parseInt(params.id) },
+      where: { id: parseInt(id) },
       include: { comments: true },
     });
 
@@ -109,7 +114,7 @@ export async function DELETE(request: NextRequest, { params }: Props) {
       return NextResponse.json("article not found", { status: 404 });
     }
     await prisma.article.delete({
-      where: { id: parseInt(params.id) },
+      where: { id: parseInt(id) },
     });
 
     // delete the comment that beloong to this article
@@ -122,7 +127,7 @@ export async function DELETE(request: NextRequest, { params }: Props) {
     return NextResponse.json({ messge: "article Deleted" }, { status: 200 });
   } catch (err) {
     return NextResponse.json(
-      { message: "internal server error" },
+      { message: "internal server error", err },
       { status: 500 }
     );
   }
