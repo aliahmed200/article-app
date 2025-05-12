@@ -11,7 +11,7 @@ import { verifyToken } from "@/app/utils/verifyToken";
  */
 
 interface Props {
-  params: Promise<{ id: string };
+  params: Promise<{ id: string }>;
 }
 
 export async function GET(request: NextRequest, { params }: Props) {
@@ -40,7 +40,7 @@ export async function GET(request: NextRequest, { params }: Props) {
 /**
  * @method PUT
  * @route  ~/api/articles/:id
- * @desc   Update Article
+ * @desc   Update Articlegit 
  * @access public
  */
 
