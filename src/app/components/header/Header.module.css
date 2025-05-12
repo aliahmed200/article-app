@@ -1,16 +1,23 @@
-.header {
+/* .header {
   display: flex;
-  width: 64rem;
-  margin: auto;
   justify-content: space-between;
   align-items: center;
   padding-block: 1.125rem;
-}
+} */
+
 .nav {
   display: flex;
   gap: 8rem;
   position: relative;
 }
+
+/* @media screen and (max-width: 1800px) {
+  .nav {
+    width: 32rem;
+    background-color: red;
+    margin: auto;
+  }
+} */
 
 .menu {
   font-size: 1.5rem;

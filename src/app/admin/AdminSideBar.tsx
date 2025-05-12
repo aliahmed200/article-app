@@ -6,14 +6,16 @@ import { FaRegComments } from "react-icons/fa";
 const AdminSideBar = () => {
   return (
     <>
-      <Link href="/admin" className="flex items-center px-3 gap-1 mb-4">
-        <CgMenuGridR />
-        <span className="hidden lg:block">Dashboard</span>
-      </Link>
-      <ul>
+      <ul className="flex justify-between items-center md:flex-col md:items-start md-flex-row">
+        <li>
+          <Link href="/admin" className="flex items-center px-3 gap-1 mb-4">
+            <CgMenuGridR />
+            <span className="hidden lg:block">Dashboard</span>
+          </Link>
+        </li>
         <li>
           <Link
-            href="/admin/articles-table"
+            href="/admin/articles-table?pageNumber=1"
             className="flex items-center gap-1  p-3 hover:lg:bg-amber-200 underline"
           >
             <MdOutlineArticle />

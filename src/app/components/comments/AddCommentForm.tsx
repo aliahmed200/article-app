@@ -1,16 +1,34 @@
 "use client";
 
+import { DOMAIN } from "@/app/utils/constant";
+import axios from "axios";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "react-toastify";
 
-const AddCommetForm = () => {
-  const [comment, setComment] = useState("");
+interface AddCommentFormProps {
+  articleId: number;
+}
 
-  const formSubmitHandler = (e: React.FormEvent) => {
+const AddCommetForm = ({ articleId }: AddCommentFormProps) => {
+  const router = useRouter();
+  const [text, setText] = useState("");
+
+  const formSubmitHandler = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (comment === " ") toast.error("please write something");
-    console.log({ comment });
-    setComment("");
+    if (!text.trim()) {
+      toast.error("please write something");
+      return;
+    }
+    try {
+      await axios.post(`${DOMAIN}/api/comments`, { text, articleId });
+      router.refresh();
+      setText("");
+    } catch (err: any) {
+      setText("");
+      console.log(err);
+      toast.error(err?.response?.data.message);
+    }
   };
   return (
     <form
@@ -21,8 +39,8 @@ const AddCommetForm = () => {
         className="w-full p-2 mb-4  bg-amber-50  text-xl"
         type="text"
         placeholder="Add a comment"
-        value={comment}
-        onChange={(e) => setComment(e.target.value)}
+        value={text}
+        onChange={(e) => setText(e.target.value)}
       />
       <button
         type="submit"

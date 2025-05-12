@@ -9,11 +9,10 @@
 body {
   font-family: var(--font-work-sans), system-ui, sans-serif;
   background: var(--background);
-}
-* {
-  box-sizing: border-box;
-}
-main {
   width: 64rem;
   margin-inline: auto;
+}
+
+* {
+  box-sizing: border-box;
 }

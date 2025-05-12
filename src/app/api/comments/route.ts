@@ -65,17 +65,21 @@ export async function POST(request: NextRequest) {
 
 export async function GET(request: NextRequest) {
   try {
-    const user = verifyToken(request);
-    if (!user || user.isAdmin === false) {
-      return NextResponse.json(
-        { message: "only Admin user can add comment" },
-        { status: 403 }
-      );
-    }
+    // const user = verifyToken(request);
 
-    const comments = await prisma.comment.findMany();
+    // if (!user) {
+    //   return NextResponse.json(
+    //     { message: "only Admin or user can get comment" },
+    //     { status: 403 }
+    //   );
+    // }
 
-    return NextResponse.json(comments, { status: 201 });
+    const comments = await prisma.comment.findMany({
+      include: { user: { select: { username: true } } },
+      orderBy: { createdAt: "desc" },
+    });
+
+    return NextResponse.json(comments, { status: 200 });
   } catch (err) {
     return NextResponse.json(
       { message: "internal server error" },

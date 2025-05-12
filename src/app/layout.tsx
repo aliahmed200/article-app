@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Work_Sans } from "next/font/google";
-import { ToastContainer } from 'react-toastify';
+import { ToastContainer } from "react-toastify";
 import "./globals.css";
 import Header from "./components/header/Header";
 import Footer from "./components/Footer";
@@ -22,9 +22,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${workSans.variable}  antialiased `}>
+      <body className={`${workSans.variable}  `}>
         <Header />
-        <ToastContainer theme='colored' position='top-center' />
+        <ToastContainer theme="colored" position="top-center" />
         <main>{children}</main>
         <Footer />
       </body>

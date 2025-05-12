@@ -19,6 +19,9 @@ export async function GET(request: NextRequest) {
     const articles = await prisma.article.findMany({
       skip: ARTICLE_PER_PAGE * (parseInt(pageNumber) - 1),
       take: ARTICLE_PER_PAGE,
+      orderBy: {
+        createdAt: "asc",
+      },
     });
     return NextResponse.json(articles, { status: 200 });
   } catch (err) {

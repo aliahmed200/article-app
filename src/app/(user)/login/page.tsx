@@ -1,7 +1,11 @@
 import React from "react";
 import LoginForm from "./LoginForm";
+import { redirect } from "next/navigation";
+import { cookies } from "next/headers";
 
 const Login = () => {
+  const token = cookies().get("jwtToken")?.value;
+  if (token) redirect("/");
   return (
     <section className="h-[100vh]  flex items-center justify-center">
       <div className="m-auto bg-white rounded-lg p-5 w-full">

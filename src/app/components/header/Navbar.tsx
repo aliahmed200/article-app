@@ -4,7 +4,10 @@ import Link from "next/link";
 import module from "./Header.module.css";
 import { AiOutlineMenu } from "react-icons/ai";
 import { IoMdClose } from "react-icons/io";
-const Navbar = () => {
+interface NavbarProps {
+  isAdmin: boolean;
+}
+const Navbar = ({ isAdmin }: NavbarProps) => {
   const [toggle, setToggle] = useState(false);
   return (
     <nav className={module.nav}>
@@ -56,13 +59,15 @@ const Navbar = () => {
           >
             About
           </Link>
-          <Link
-            onClick={() => setToggle(false)}
-            className={module.link}
-            href="/admin"
-          >
-            Admin
-          </Link>
+          {isAdmin && (
+            <Link
+              onClick={() => setToggle(false)}
+              className={module.link}
+              href="/admin"
+            >
+              Admin
+            </Link>
+          )}
         </ul>
       </div>
     </nav>

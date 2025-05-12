@@ -176,7 +176,7 @@ const config = {
     "db": {
       "url": {
         "fromEnvVar": "DATABASE_URL",
-        "value": "postgresql://postgres:25924692591192@localhost:5432/ArticleDB?schema=public"
+        "value": "postgresql://clouddb_owner:npg_2SKjPgHkL1tr@ep-wispy-cake-a4tx9op6-pooler.us-east-1.aws.neon.tech/clouddb?sslmode=require"
       }
     }
   },

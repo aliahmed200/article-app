@@ -2,16 +2,24 @@
 
 import { useState } from "react";
 import { toast } from "react-toastify";
-
+import { DOMAIN } from "../utils/constant";
+import axios from "axios";
 const AddArticleForm = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
 
-  const formSubmitHandler = (e: React.FormEvent) => {
+  const formSubmitHandler = async (e: React.FormEvent) => {
     e.preventDefault();
     if (title === "") toast.error("Title is Required");
     if (description === "") toast.error("Description is Required");
-    console.log({ title, description });
+    try {
+      await axios.post(`${DOMAIN}/api/articles`, { title, description });
+      setTitle("");
+      setDescription("");
+      toast.success("New Article Add..!");
+    } catch (err: any) {
+      toast.error(err?.response?.data.message);
+    }
   };
   return (
     <form onSubmit={formSubmitHandler} className="flex flex-col">

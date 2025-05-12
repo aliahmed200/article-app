@@ -2,18 +2,41 @@
 
 import { useState } from "react";
 import { toast } from "react-toastify";
+import { DOMAIN } from "@/app/utils/constant";
+import axios from "axios";
+import { useRouter } from "next/navigation";
 
 const RegisterForm = () => {
-  const [username, setUserName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [data, setData] = useState({
+    username: "",
+    email: "",
+    password: "",
+  });
 
-  const formSubmitHandler = (e: React.FormEvent) => {
+  const router = useRouter();
+
+  const [loading, setLoading] = useState(false);
+
+  const formSubmitHandler = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (username === "") toast.error("User name is Required");
-    if (email === "") toast.error("Email is Required");
-    if (password === "") toast.error("Password is Required");
-    console.log({ username, email, password });
+    if (data.username === "") toast.error("User name is Required");
+    if (data.email === "") toast.error("Email is Required");
+    if (data.password === "") toast.error("Password is Required");
+    try {
+      setLoading(true);
+      await axios.post(`${DOMAIN}/api/users/register`, {
+        username: data.username,
+        email: data.email,
+        password: data.password,
+      });
+      router.replace("/");
+      setLoading(false);
+      router.refresh();
+    } catch (err: any) {
+      toast.error(err?.response?.data.message);
+      setLoading(false);
+      console.log(err);
+    }
   };
   return (
     <form onSubmit={formSubmitHandler} className="flex flex-col">
@@ -25,8 +48,8 @@ const RegisterForm = () => {
           className="mb-4 rounded border border-gray-400 p-2 text-xl"
           type="text"
           placeholder="Enter your username"
-          value={username}
-          onChange={(e) => setUserName(e.target.value)}
+          value={data.username}
+          onChange={(e) => setData({ ...data, username: e.target.value })}
         />
       </div>
       <div className="flex flex-col gap-2.5">
@@ -37,8 +60,8 @@ const RegisterForm = () => {
           className="mb-4 rounded border border-gray-400 p-2 text-xl"
           type="email"
           placeholder="Enter your email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          value={data.email}
+          onChange={(e) => setData({ ...data, email: e.target.value })}
         />
       </div>
       <div className="flex flex-col gap-2.5">
@@ -49,8 +72,8 @@ const RegisterForm = () => {
           className="mb-4 rounded border border-gray-400 p-2 text-xl"
           type="password"
           placeholder="Enter your password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          value={data.password}
+          onChange={(e) => setData({ ...data, password: e.target.value })}
         />
       </div>
 
@@ -58,7 +81,7 @@ const RegisterForm = () => {
         type="submit"
         className="text-2xl text-white bg-black p-2 rounded"
       >
-        Register
+        {loading ? "Loading..." : "Register"}
       </button>
     </form>
   );
