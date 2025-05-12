@@ -11,7 +11,7 @@ import { verifyToken } from "@/app/utils/verifyToken";
  */
 
 interface Props {
-  params: { id: string };
+  params: Promise<{ id: string };
 }
 
 export async function GET(request: NextRequest, { params }: Props) {
