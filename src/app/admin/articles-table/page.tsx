@@ -21,7 +21,7 @@ export default async function Page({ searchParams }: Props) {
     redirect("/");
   }
 
-  const { pageNumber } = searchParams;
+  const { pageNumber } = await searchParams;
   const articles: Article[] = await getArticles(pageNumber);
   const count: number = await getArticlesCount();
   const pages = Math.ceil(count / ARTICLE_PER_PAGE);
