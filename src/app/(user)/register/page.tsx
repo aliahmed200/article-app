@@ -2,8 +2,9 @@ import React from "react";
 import RegisterForm from "./RegisterForm";
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
-const Register = () => {
-  const token = cookies().get("jwtToken")?.value;
+const Register = async () => {
+  const cookieStore = await cookies();
+  const token = cookieStore.get("jwtToken")?.value;
   if (token) redirect("/");
   return (
     <section className="h-[100vh]  flex items-center justify-center">
