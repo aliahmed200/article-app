@@ -7,12 +7,13 @@ import { ARTICLE_PER_PAGE } from "../../utils/constant";
 import { getArticles, getArticlesCount } from "@/apicalls/articleApiCall";
 import Pagination from "../../components/articles/Pagination";
 import ArticleItem from "@/app/components/articles/ArticleItem";
+// import type { Metadata, ResolvingMetadata } from "next";
 
-export default async function Page({
-  searchParams,
-}: {
-  searchParams: { pageNumber?: string };
-}) {
+type Props = {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+};
+
+export default async function Page({ searchParams }: Props) {
   const token = cookies().get("jwtToken")?.value;
   const payload = verifyTokenForPage(token);
   if (!token || payload?.isAdmin === false) {
