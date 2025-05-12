@@ -10,7 +10,7 @@ import ArticleItem from "@/app/components/articles/ArticleItem";
 // import type { Metadata, ResolvingMetadata } from "next";
 
 type Props = {
-  searchParams: Promise<{ [key: string]: string | undefined }>;
+  searchParams: Promise<{ [key: string]: string }>;
 };
 
 export default async function Page({ searchParams }: Props) {
