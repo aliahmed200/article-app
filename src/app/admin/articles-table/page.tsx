@@ -14,7 +14,8 @@ type Props = {
 };
 
 export default async function Page({ searchParams }: Props) {
-  const token = cookies().get("jwtToken")?.value;
+  const cookieStore = await cookies();
+  const token = cookieStore.get("jwtToken")?.value || "";
   const payload = verifyTokenForPage(token);
   if (!token || payload?.isAdmin === false) {
     redirect("/");

@@ -7,7 +7,9 @@ import React from "react";
 import { DOMAIN } from "@/app/utils/constant";
 
 const AdminCommentsTable = async () => {
-  const token = cookies().get("jwtToken")?.value;
+  const cookieStore = await cookies();
+
+  const token = cookieStore.get("jwtToken")?.value || "";
   const payload = verifyTokenForPage(token);
   if (!token || payload?.isAdmin === false) {
     redirect("/");
@@ -15,8 +17,6 @@ const AdminCommentsTable = async () => {
   const response = await fetch(`${DOMAIN}/api/comments`);
   const comments: CommentWithUser[] = await response.json();
   console.log("comments--------------------------------------------", comments);
-
-
 
   return (
     <section className="mb-32">

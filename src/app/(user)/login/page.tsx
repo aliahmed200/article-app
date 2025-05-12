@@ -3,8 +3,9 @@ import LoginForm from "./LoginForm";
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
 
-const Login = () => {
-  const token = cookies().get("jwtToken")?.value;
+const Login = async () => {
+  const cookieStore = await cookies();
+  const token = cookieStore.get("jwtToken")?.value;
   if (token) redirect("/");
   return (
     <section className="h-[100vh]  flex items-center justify-center">

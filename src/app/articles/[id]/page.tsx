@@ -9,7 +9,9 @@ interface SignleArticleProps {
   params: Promise<{ id: string }>;
 }
 const page = async ({ params }: SignleArticleProps) => {
-  const token = cookies().get("jwtToken")?.value || "";
+  const cookieStore = await cookies();
+
+  const token = cookieStore.get("jwtToken")?.value || "";
   const payload = verifyTokenForPage(token);
   const article: SingleArticle = await getSingleArticleById(params.id);
 
