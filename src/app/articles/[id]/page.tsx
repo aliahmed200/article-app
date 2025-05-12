@@ -6,7 +6,7 @@ import { verifyTokenForPage } from "@/app/utils/verifyToken";
 import { cookies } from "next/headers";
 
 interface SignleArticleProps {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }
 const page = async ({ params }: SignleArticleProps) => {
   const token = cookies().get("jwtToken")?.value || "";

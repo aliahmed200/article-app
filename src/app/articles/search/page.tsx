@@ -3,7 +3,7 @@ import ArticleItem from "@/app/components/articles/ArticleItem";
 import { Article } from "@/generated/prisma";
 
 interface SearchArticlePageProps {
-  searchParams: { searchText: string };
+  searchParams: Promise<{ searchText: string }>;
 }
 const Search = async ({ searchParams }: SearchArticlePageProps) => {
   const searchText = searchParams?.searchText || "";
