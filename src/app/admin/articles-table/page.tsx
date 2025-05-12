@@ -9,7 +9,7 @@ import Pagination from "../../components/articles/Pagination";
 import ArticleItem from "@/app/components/articles/ArticleItem";
 
 interface ArticleAdminPageProps {
-  searchParams: { pageNumber: string };
+  searchParams: { pageNumber?: string };
 }
 
 const AdminArticlesTable = async ({ searchParams }: ArticleAdminPageProps) => {
