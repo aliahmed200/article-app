@@ -8,11 +8,11 @@ import { getArticles, getArticlesCount } from "@/apicalls/articleApiCall";
 import Pagination from "../../components/articles/Pagination";
 import ArticleItem from "@/app/components/articles/ArticleItem";
 
-interface ArticleAdminPageProps {
+export default async function Page({
+  searchParams,
+}: {
   searchParams: { pageNumber?: string };
-}
-
-const AdminArticlesTable = async ({ searchParams }: ArticleAdminPageProps) => {
+}) {
   const token = cookies().get("jwtToken")?.value;
   const payload = verifyTokenForPage(token);
   if (!token || payload?.isAdmin === false) {
@@ -37,6 +37,6 @@ const AdminArticlesTable = async ({ searchParams }: ArticleAdminPageProps) => {
       </div>
     </section>
   );
-};
+}
 
-export default AdminArticlesTable;
+// export default Page;
