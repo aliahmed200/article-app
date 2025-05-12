@@ -9,11 +9,12 @@ interface SignleArticleProps {
   params: Promise<{ id: string }>;
 }
 const page = async ({ params }: SignleArticleProps) => {
+  const { id } = await params;
   const cookieStore = await cookies();
 
   const token = cookieStore.get("jwtToken")?.value || "";
   const payload = verifyTokenForPage(token);
-  const article: SingleArticle = await getSingleArticleById(params.id);
+  const article: SingleArticle = await getSingleArticleById(id);
 
   return (
     <section className="my-4 mb-32">

@@ -4,8 +4,9 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { verifyTokenForPage } from "../utils/verifyToken";
 
-const Admin = () => {
-  const token = cookies().get("jwtToken")?.value;
+const Admin = async () => {
+  const cookieStore = await cookies();
+  const token = cookieStore.get("jwtToken")?.value || "";
   const payload = verifyTokenForPage(token);
   if (!token || payload?.isAdmin === false) {
     redirect("/");

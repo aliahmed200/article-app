@@ -6,7 +6,8 @@ interface SearchArticlePageProps {
   searchParams: Promise<{ searchText: string }>;
 }
 const Search = async ({ searchParams }: SearchArticlePageProps) => {
-  const searchText = searchParams?.searchText || "";
+  const { searchText } = await searchParams;
+  // searchText = searchParams?.searchText || "";
   const articles: Article[] = await searchArticles(searchText);
   if (!searchText) {
     return <p className="text-center mt-10">No search text provided.</p>;
