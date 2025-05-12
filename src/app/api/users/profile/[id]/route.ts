@@ -5,7 +5,7 @@ import { UpdateUserDto } from "@/app/utils/dtos";
 import { updateUserSchema } from "@/app/utils/validationSchhema";
 import bcrypt from "bcryptjs";
 interface Props {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }
 
 /**

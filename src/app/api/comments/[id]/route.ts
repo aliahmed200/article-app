@@ -4,7 +4,7 @@ import { verifyToken } from "@/app/utils/verifyToken";
 import { updateCommentDto } from "@/app/utils/dtos";
 
 interface Props {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }
 /**
  * @method PUT
