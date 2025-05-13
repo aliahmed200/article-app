@@ -1,6 +1,6 @@
 import Link from "next/link";
 import React from "react";
-import module from "./Header.module.css";
+// import module from "./Header.module.css";
 import Navbar from "./Navbar";
 import { cookies } from "next/headers";
 import { verifyTokenForPage } from "@/app/utils/verifyToken";
@@ -14,7 +14,7 @@ const Header = async () => {
   //${module.header}
   return (
     <header
-      className={`flex w-[40rem] md:w-[64rem] m-auto justify-between items-center py-4`}
+      className={`flex w-[21rem] md:w-[40rem] lg:w-[64rem] m-auto justify-between items-center py-4`}
     >
       <Navbar isAdmin={payload?.isAdmin || false} />
       <div>
@@ -25,12 +25,8 @@ const Header = async () => {
           </div>
         ) : (
           <div className="md:space-x-4">
-            <Link className={module.authlink} href="/login">
-              Login
-            </Link>
-            <Link className={module.authlink} href="/register">
-              Register
-            </Link>
+            <Link href="/login">Login</Link>
+            <Link href="/register">Register</Link>
           </div>
         )}
       </div>

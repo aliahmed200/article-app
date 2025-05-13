@@ -22,7 +22,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${workSans.variable}  `}>
+      <body
+        className={`${workSans.variable} w-[21rem]  md:w-[40rem] lg:w-[64rem]`}
+      >
         <Header />
         <ToastContainer theme="colored" position="top-center" />
         <main>{children}</main>

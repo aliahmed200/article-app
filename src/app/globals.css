@@ -2,14 +2,14 @@
 
 :root {
   /* --background: #fee685; */
-  --background: #f9ecb6;
+  --background: #fbdc62;
+  /* --background: #f9ecb6; */
   --font-color: rgb(13, 13, 13);
 }
 
 body {
   font-family: var(--font-work-sans), system-ui, sans-serif;
   background: var(--background);
-  width: 64rem;
   margin-inline: auto;
 }
 

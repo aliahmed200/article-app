@@ -12,11 +12,11 @@ export const metadata: Metadata = {
 
 const AdminDahboardLayout = ({ children }: AdminDashboardLayoutProps) => {
   return (
-    <div className="md:min-h-[100vh]  flex-col  md:flex md:flex-row gap-10  md:gap-5 mb-11">
-      <div className="md:h-[100vh] w-1/2 m-auto md:w-full  md:bg-amber-50 rounded-2xl lg:w-1/5 py-5">
+    <div className="lg:min-h-[100vh] flex-col lg:flex md:flex-row gap-10 items-start justify-end  md:gap-5 mb-11">
+      <div className="lg:h-[100vh]  md:w-full  lg:bg-amber-50 rounded-2xl lg:w-1/5 py-5">
         <AdminSideBar />
       </div>
-      <div className="min-h-[100vh] w-1/2 m-auto md:w-full bg-amber-50 rounded-2xl  p-8">
+      <div className="min-h-[100vh] m-auto md:w-full bg-amber-50 rounded-2xl p-8">
         {children}
       </div>
     </div>

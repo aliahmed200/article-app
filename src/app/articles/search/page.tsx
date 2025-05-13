@@ -23,7 +23,7 @@ const Search = async ({ searchParams }: SearchArticlePageProps) => {
             Articles Based on{" "}
             <span className="font-bold underline">{searchText}</span>
           </h1>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6">
+          <div className="w-full mt-6">
             {articles.map((article) => (
               <ArticleItem article={article} key={article.id} />
             ))}

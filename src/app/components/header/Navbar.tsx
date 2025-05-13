@@ -13,7 +13,7 @@ const Navbar = ({ isAdmin }: NavbarProps) => {
     <nav className={module.nav}>
       <div>
         <Link className={module.logo} href="/">
-          Cloud Hosting
+          Article
         </Link>
         <div className={module.menu}>
           {toggle ? (
@@ -51,13 +51,6 @@ const Navbar = ({ isAdmin }: NavbarProps) => {
             href="/articles?pageNumber=1"
           >
             Articles
-          </Link>
-          <Link
-            onClick={() => setToggle(false)}
-            className={module.link}
-            href="/about"
-          >
-            About
           </Link>
           {isAdmin && (
             <Link

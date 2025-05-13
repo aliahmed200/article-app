@@ -6,7 +6,7 @@ import { FaRegComments } from "react-icons/fa";
 const AdminSideBar = () => {
   return (
     <>
-      <ul className="flex justify-between items-center md:flex-col md:items-start md-flex-row">
+      <ul className="flex justify-between items-center lg:flex-col lg:items-start">
         <li>
           <Link href="/admin" className="flex items-center px-3 gap-1 mb-4">
             <CgMenuGridR />

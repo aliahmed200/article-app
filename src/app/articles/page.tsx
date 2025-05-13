@@ -22,9 +22,9 @@ const Articles = async ({ searchParams }: ArticlePageProps) => {
   const count: number = await getArticlesCount();
   const pages = Math.ceil(count / ARTICLE_PER_PAGE);
   return (
-    <section className="mb-32 w-[70%] m-auto md:w-full">
+    <section className="mb-32  m-auto w-full">
       <SearchArticlesInput />
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-6">
         {articles.map((article) => (
           <ArticleItem article={article} key={article.id} />
         ))}
