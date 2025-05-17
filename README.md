@@ -98,13 +98,6 @@ npm install
 # Database (Neon)
 DATABASE_URL="your_neon_database_url"
 
-# Stripe (if using payments)
-STRIPE_SECRET_KEY="your_stripe_secret_key"
-STRIPE_PUBLIC_KEY="your_stripe_public_key"
-
-# Other secrets
-NEXTAUTH_SECRET="your_nextauth_secret" # if using NextAuth or JWT
-
 🔐 Don't forget to add .env to your .gitignore.
 
 npx prisma generate
