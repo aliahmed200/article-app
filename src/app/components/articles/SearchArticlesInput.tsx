@@ -1,5 +1,6 @@
 "use client";
 
+import { Input } from "@/components/ui/input";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
@@ -14,8 +15,8 @@ const SearchArticlesInput = () => {
   return (
     <form onSubmit={formSubmitHandler} className="flex flex-col">
       <div className="flex flex-col gap-2.5">
-        <input
-          className="w-full mb-4 rounded  bg-amber-50 border-black p-2 text-xl"
+        <Input
+          className="w-full mb-4 "
           type="search"
           placeholder="Search For articles"
           value={searchText}

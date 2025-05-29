@@ -1,61 +1,150 @@
 "use client";
 
-import { useState } from "react";
+import { z } from "zod";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "react-toastify";
 import { DOMAIN } from "../utils/constant";
 import axios from "axios";
-const AddArticleForm = () => {
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
+import { Button } from "@/components/ui/button";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 
-  const formSubmitHandler = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (title === "") toast.error("Title is Required");
-    if (description === "") toast.error("Description is Required");
+import { Input } from "@/components/ui/input";
+import Tiptap from "./tip-tap";
+import Image from "next/image";
+
+// Define Zod schema for validation
+const formSchema = z.object({
+  title: z.string().min(1, "Title is required"),
+  description: z.string().min(1, "Description is required"),
+  image: z.instanceof(File).optional(),
+});
+
+export default function AddArticleForm() {
+  // Initialize React Hook Form with Zod schema
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      title: "",
+      description: "",
+      image: undefined,
+    },
+  });
+
+  // Form submission handler
+  const onSubmit = async (data: z.infer<typeof formSchema>) => {
     try {
-      await axios.post(`${DOMAIN}/api/articles`, { title, description });
-      setTitle("");
-      setDescription("");
-      toast.success("New Article Add..!");
+      let imageUrl = "";
+
+      if (data.image) {
+        const imageData = new FormData();
+        imageData.append("file", data.image);
+        imageData.append(
+          "upload_preset",
+          process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET!
+        );
+
+        const res = await axios.post(
+          `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/upload`,
+          imageData
+        );
+
+        imageUrl = res.data.secure_url;
+      }
+
+      await axios.post(`${DOMAIN}/api/articles`, {
+        title: data.title,
+        description: data.description,
+        image: imageUrl,
+      });
+
+      form.reset();
+      toast.success("New Article Added!");
     } catch (err: any) {
-      toast.error(err?.response?.data.message);
+      toast.error(err?.response?.data.message || "Failed to add article");
     }
   };
+
   return (
-    <form onSubmit={formSubmitHandler} className="flex flex-col">
-      <div className="flex flex-col gap-2.5">
-        <label className="text-xl" htmlFor="">
-          Title
-        </label>
-        <input
-          className="mb-4 rounded border border-gray-400 p-2 text-xl"
-          type="text"
-          placeholder="Enter Article Title"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-        />
-      </div>
-      <div className="flex flex-col gap-2.5">
-        <label className="text-xl" htmlFor="">
-          Description
-        </label>
-        <textarea
-          className="mb-4 rounded border border-gray-400 p-2 text-xl"
-          placeholder="Enter Article decription"
-          value={description}
-          rows={5}
-          onChange={(e) => setDescription(e.target.value)}
-        />
-      </div>
-
-      <button
-        type="submit"
-        className="text-2xl text-white bg-black p-2 rounded"
+    <Form {...form}>
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="flex flex-col gap-6 font-[var(--font-abeezee)]"
       >
-        Add
-      </button>
-    </form>
-  );
-};
+        <FormField
+          control={form.control}
+          name="title"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Title</FormLabel>
+              <FormControl>
+                <Input placeholder="Enter Article Title" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="description"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Description</FormLabel>
+              <FormControl>
+                <Tiptap val={field.value} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="image"
+          render={({ field: { onChange, value } }) => (
+            <FormItem>
+              <FormLabel>Image</FormLabel>
+              <FormControl>
+                <div>
+                  <Input
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => {
+                      const file = e.target.files?.[0];
+                      if (file) {
+                        onChange(file);
+                      }
+                    }}
+                  />
+                  {value && (
+                    <div className="mt-4">
+                      <p className="text-sm text-muted-foreground">Preview:</p>
+                      <Image
+                        src={URL.createObjectURL(value)}
+                        alt="Preview"
+                        className="mt-2 max-h-60 rounded"
+                        width={50}
+                        height={50}
+                      />
+                    </div>
+                  )}
+                </div>
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
-export default AddArticleForm;
+        <Button type="submit" className=" ">
+          Add
+        </Button>
+      </form>
+    </Form>
+  );
+}

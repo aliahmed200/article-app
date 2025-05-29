@@ -1,6 +1,8 @@
 "use client";
 
 import { DOMAIN } from "@/app/utils/constant";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -35,19 +37,18 @@ const AddCommetForm = ({ articleId }: AddCommentFormProps) => {
       onSubmit={formSubmitHandler}
       className="flex justify-center items-start my-5"
     >
-      <input
-        className="w-full p-2 mb-4  bg-amber-50  text-xl"
+      <Input
         type="text"
         placeholder="Add a comment"
         value={text}
         onChange={(e) => setText(e.target.value)}
       />
-      <button
+      <Button
         type="submit"
-        className="text-sm cursor-pointer text-white bg-black p-3"
+        className="text-sm cursor-pointer text-white rounded-l-none "
       >
         Comment
-      </button>
+      </Button>
     </form>
   );
 };

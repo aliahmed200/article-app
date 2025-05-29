@@ -3,8 +3,8 @@ import { registerSchema } from "@/app/utils/validationSchhema";
 import { NextResponse, NextRequest } from "next/server";
 import prisma from "@/app/utils/db";
 import bcrypt from "bcryptjs";
-import { JWTPayload } from "@/app/utils/types";
-import { setCookie } from "@/app/utils/generateToken";
+// import { JWTPayload } from "@/app/utils/types";
+// import { setCookie } from "@/app/utils/generateToken";
 
 /**
  * @method Post
@@ -39,6 +39,7 @@ export async function POST(request: NextRequest) {
         username: body.username,
         email: body.email,
         password: hashedPassword,
+        image: body.image,
       },
       select: {
         username: true,
@@ -47,18 +48,15 @@ export async function POST(request: NextRequest) {
       },
     });
 
-    const jwtPayload: JWTPayload = {
-      id: newUser.id,
-      isAdmin: newUser.isAdmin,
-      username: newUser.username,
-    };
+    // const jwtPayload: JWTPayload = {
+    //   id: newUser.id,
+    //   isAdmin: newUser.isAdmin,
+    //   username: newUser.username,
+    // };
 
-    const cookie = setCookie(jwtPayload);
+    // const cookie = setCookie(jwtPayload);
 
-    return NextResponse.json(
-      { ...newUser },
-      { status: 201, headers: { "Set-Cookie": cookie } }
-    );
+    return NextResponse.json({ ...newUser }, { status: 201 });
   } catch (err) {
     return NextResponse.json(
       { message: "internal server error", err },

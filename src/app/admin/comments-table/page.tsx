@@ -20,16 +20,15 @@ const AdminCommentsTable = async () => {
 
   return (
     <section className="mb-32">
-      {/* <Pagination
-        pageNumber={parseInt(pageNumber)}
-        route="/admin/articles-table"
-        pages={pages}
-      /> */}
-      <div className="grid grid-cols-1 gap-4 mt-6">
-        {comments.map((comment) => (
-          <CommentItem comment={comment} key={comment.id} />
-        ))}
-      </div>
+      {comments.length ? (
+        <div className="grid grid-cols-1 gap-4 mt-6">
+          {comments.map((comment) => (
+            <CommentItem comment={comment} key={comment.id} />
+          ))}
+        </div>
+      ) : (
+        "no comments"
+      )}
     </section>
   );
 };

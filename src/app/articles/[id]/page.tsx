@@ -4,6 +4,7 @@ import CommentItem from "@/app/components/comments/CommentItem";
 import { SingleArticle } from "@/app/utils/types";
 import { verifyTokenForPage } from "@/app/utils/verifyToken";
 import { cookies } from "next/headers";
+import Image from "next/image";
 
 interface SignleArticleProps {
   params: Promise<{ id: string }>;
@@ -17,13 +18,27 @@ const page = async ({ params }: SignleArticleProps) => {
   const article: SingleArticle = await getSingleArticleById(id);
 
   return (
-    <section className="my-4 mb-32">
-      <div className="bg-amber-50 p-4 px-6 rounded-lg shadow flex flex-col justify-between gap-4">
-        <h1 className="text-4xl font-[900] ">{article.title}</h1>
-        <div className="bg-gray-100 w-fit text-xl">
+    <section className="my-8 mb-48">
+      <div className=" rounded-lg flex flex-col justify-between gap-1">
+        {article.image && (
+          <Image
+            src={article.image}
+            alt="Preview"
+            className="rounded object-cover object-top w-full max-h-[500px]"
+            width={120}
+            height={120}
+            layout="responsive"
+            priority={true}
+          />
+        )}
+        <h1 className="text-lg font-[900] ">{article.title}</h1>
+        <div className="bg-gray-100 w-fit mb-2">
           {new Date(article.createdAt).toDateString()}
         </div>
-        <p className="text-xl font-[400]">{article.description}</p>
+        <div
+          className="font-light mb-2 mx-3"
+          dangerouslySetInnerHTML={{ __html: article.description }}
+        />
       </div>
       {payload ? (
         <AddCommetForm articleId={article.id} />

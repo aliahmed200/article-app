@@ -43,6 +43,8 @@ export async function POST(request: NextRequest) {
       id: user.id,
       isAdmin: user.isAdmin,
       username: user.username,
+      email: user.email,
+      image: user.image,
     };
 
     const cookie = setCookie(jwtPayload);
@@ -53,7 +55,7 @@ export async function POST(request: NextRequest) {
     );
   } catch (err) {
     return NextResponse.json(
-      { message: "internal server error",err },
+      { message: "internal server error", err },
       { status: 500 }
     );
   }

@@ -4,6 +4,10 @@ import Link from "next/link";
 import module from "./Header.module.css";
 import { AiOutlineMenu } from "react-icons/ai";
 import { IoMdClose } from "react-icons/io";
+import theblog from "../../../../public/Container.svg";
+
+import Image from "next/image";
+
 interface NavbarProps {
   isAdmin: boolean;
 }
@@ -13,7 +17,11 @@ const Navbar = ({ isAdmin }: NavbarProps) => {
     <nav className={module.nav}>
       <div>
         <Link className={module.logo} href="/">
-          Article
+          <Image
+            className="w-40 dark:brightness-0 dark:invert "
+            src={theblog}
+            alt="logo"
+          />
         </Link>
         <div className={module.menu}>
           {toggle ? (

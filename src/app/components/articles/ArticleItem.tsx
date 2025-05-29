@@ -1,8 +1,10 @@
 "use client";
 
 import { DOMAIN } from "@/app/utils/constant";
+import { Button } from "@/components/ui/button";
 import { Article } from "@/generated/prisma";
 import axios from "axios";
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
@@ -23,27 +25,33 @@ const ArticleItem = ({ article, isAdmin = false }: ArticleItemProps) => {
     }
   };
   return (
-    <div
-      className={`bg-amber-50 p-4 px-6 rounded-lg shadow flex flex-col justify-between gap-1`}
-    >
-      <div className="flex justify-between">
-        <h3 className="font-medium text-2xl line-clamp-1">{article.title}</h3>
+    <div className={` rounded-lg flex flex-col justify-between `}>
+      <Link href={`/articles/${article.id}`}>
+        {article.image && (
+          <Image
+            src={article.image}
+            alt="Preview"
+            className="rounded object-cover object-top w-full max-h-60"
+            width={120}
+            height={120}
+            layout="responsive"
+            priority={true}
+          />
+        )}
+      </Link>
+
+      <div className="flex justify-between items-center mt-4">
+        <h3 className="font-medium  line-clamp-1">{article.title}</h3>
+
         {isAdmin && (
-          <button
-            className="cursor-pointer bg-red-300 text-white py-2 px-4 rounded-md"
+          <Button
+            className="cursor-pointer bg-destructive rounded-md hover:bg-destructive/50 "
             onClick={() => deleteSingleArticleById(article.id)}
           >
             delete
-          </button>
+          </Button>
         )}
       </div>
-      <p className="text-xl font-light">{article.description}</p>
-      <Link
-        className="bg-amber-300 w-fit underline text-xl"
-        href={`/articles/${article.id}`}
-      >
-        Read More
-      </Link>
     </div>
   );
 };

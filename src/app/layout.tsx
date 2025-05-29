@@ -3,7 +3,7 @@ import { Work_Sans } from "next/font/google";
 import { ToastContainer } from "react-toastify";
 import "./globals.css";
 import Header from "./components/header/Header";
-import Footer from "./components/Footer";
+import { ThemeProvider } from "./components/providers/theme-provider";
 
 const workSans = Work_Sans({
   variable: "--font-work-sans",
@@ -22,14 +22,20 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${workSans.variable} w-[21rem]  md:w-[40rem] lg:w-[64rem]`}
+      <ThemeProvider
+        attribute="class"
+        defaultTheme="system"
+        enableSystem
+        disableTransitionOnChange
       >
-        <Header />
-        <ToastContainer theme="colored" position="top-center" />
-        <main>{children}</main>
-        <Footer />
-      </body>
+        <body className={`${workSans.variable} `}>
+          <ToastContainer theme="colored" position="top-center" />
+          <Header />
+          <main className="w-[21rem]  md:w-[40rem] lg:w-[64rem] m-auto">
+            {children}
+          </main>
+        </body>
+      </ThemeProvider>
     </html>
   );
 }

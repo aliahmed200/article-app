@@ -1,6 +1,7 @@
 export interface createArticleDto {
   title: string;
   description: string;
+  image: string;
 }
 export interface updateArticleDto {
   title?: string;
@@ -10,6 +11,7 @@ export interface registerDto {
   username: string;
   email: string;
   password: string;
+  image: string;
 }
 export interface LoginDto {
   email: string;

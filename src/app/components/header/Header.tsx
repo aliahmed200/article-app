@@ -4,30 +4,31 @@ import React from "react";
 import Navbar from "./Navbar";
 import { cookies } from "next/headers";
 import { verifyTokenForPage } from "@/app/utils/verifyToken";
-import LogOutButton from "./LogOutButton";
+import UserButton from "./user-button";
+import { Button } from "@/components/ui/button";
+import { LogIn } from "lucide-react";
 
 const Header = async () => {
   const cookieStore = await cookies();
 
   const token = cookieStore.get("jwtToken")?.value || "";
   const payload = verifyTokenForPage(token);
-  //${module.header}
   return (
     <header
-      className={`flex w-[21rem] md:w-[40rem] lg:w-[64rem] m-auto justify-between items-center py-4`}
+      className={` w-full max-w-[64rem] mx-auto flex justify-between items-center py-4`}
     >
       <Navbar isAdmin={payload?.isAdmin || false} />
-      <div>
+
+      <div className="flex-shrink-0">
         {payload ? (
-          <div className="md:space-x-4">
-            <strong>{payload.username}</strong>
-            <LogOutButton />
-          </div>
+          <UserButton user={payload} />
         ) : (
-          <div className="md:space-x-4">
-            <Link href="/login">Login</Link>
-            <Link href="/register">Register</Link>
-          </div>
+          <Button>
+            <Link className="flex gap-2" href="/login">
+              <LogIn size={16} />
+              <span>Login</span>
+            </Link>
+          </Button>
         )}
       </div>
     </header>

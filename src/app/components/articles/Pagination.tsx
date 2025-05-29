@@ -13,7 +13,7 @@ const Pagination = ({ pageNumber, pages, route }: PaginationProps) => {
       {pageNumber !== 1 && (
         <Link
           href={`${route}?pageNumber=${pageNumber - 1}`}
-          className="p-2 px-4 border cursor-pointer"
+          className="p-2 px-4 border cursor-pointer rounded-l-lg hover:bg-violet-200 "
         >
           Prev
         </Link>
@@ -24,7 +24,7 @@ const Pagination = ({ pageNumber, pages, route }: PaginationProps) => {
           href={`${route}?pageNumber=${page}`}
           className={` ${
             pageNumber === page ? "bg-white" : ""
-          } p-2 px-4 border cursor-pointer`}
+          } p-2 px-4 border cursor-pointer hover:bg-violet-200 `}
           key={page}
         >
           {page}
@@ -33,7 +33,7 @@ const Pagination = ({ pageNumber, pages, route }: PaginationProps) => {
       {pageNumber != pages && (
         <Link
           href={`${route}?pageNumber=${pageNumber + 1}`}
-          className="p-2 px-4 border cursor-pointer"
+          className="p-2 px-4 border cursor-pointer rounded-r-lg hover:bg-violet-200 "
         >
           Next
         </Link>

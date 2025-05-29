@@ -21,6 +21,7 @@ export async function POST(request: NextRequest) {
       );
     }
     const body = (await request.json()) as CraeteCommentDto;
+
     const validation = createCommentSchema.safeParse(body);
     if (!validation.success) {
       return NextResponse.json(validation.error.issues[0].message, {
@@ -82,7 +83,7 @@ export async function GET(request: NextRequest) {
     return NextResponse.json(comments, { status: 200 });
   } catch (err) {
     return NextResponse.json(
-      { message: "internal server error",err },
+      { message: "internal server error", err },
       {
         status: 500,
       }

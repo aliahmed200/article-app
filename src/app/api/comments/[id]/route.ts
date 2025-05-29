@@ -13,12 +13,12 @@ interface Props {
  * @access private (only owner in user can comment)
  */
 
-export async function PUT(request: NextRequest, { params }: Props) {
+export async function PUT(request: NextRequest, params: Props) {
   try {
     const { id } = await params;
     const comment = await prisma.comment.findUnique({
       where: { id: parseInt(id) },
-    });
+    }); 
     if (!comment) {
       return NextResponse.json(
         { message: "comment not found" },
