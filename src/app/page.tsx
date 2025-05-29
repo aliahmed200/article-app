@@ -13,6 +13,10 @@ const HomePage = () => {
           src={theblog}
           alt="tree"
         />
+        <div className="fixed top-4 right-20">
+          <p>email : dev@dev.dev</p>
+          <p>password : 2592469</p>
+        </div>
 
         {/* <Lottie
           animationData={animationData}
