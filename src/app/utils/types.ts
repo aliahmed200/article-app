@@ -1,4 +1,4 @@
-import { Article, Comment, User } from "@/generated/prisma";
+import { Article, Comment } from "@/generated/prisma";
 export type JWTPayload = {
   id: number;
   isAdmin: boolean;
