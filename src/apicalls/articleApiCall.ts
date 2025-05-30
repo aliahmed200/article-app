@@ -1,6 +1,6 @@
-import { Article, Comment } from "@/generated/prisma";
+import { Article } from "@/generated/prisma";
 import { DOMAIN } from "@/app/utils/constant";
-import { CommentWithUser, SingleArticle } from "@/app/utils/types";
+import { SingleArticle } from "@/app/utils/types";
 // get article based in page number
 export async function getArticles(
   pageNumber: string | undefined
