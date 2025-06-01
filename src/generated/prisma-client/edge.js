@@ -153,7 +153,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "E:\\next.js\\cloud-hosting-project\\src\\generated\\prisma-client",
+      "value": "C:\\Users\\Professional\\OneDrive\\Desktop\\cloud-hosting-project\\src\\generated\\prisma-client",
       "fromEnvVar": null
     },
     "config": {
@@ -167,7 +167,7 @@ const config = {
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "E:\\next.js\\cloud-hosting-project\\prisma\\schema.prisma",
+    "sourceFilePath": "C:\\Users\\Professional\\OneDrive\\Desktop\\cloud-hosting-project\\prisma\\schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
@@ -181,6 +181,7 @@ const config = {
     "db"
   ],
   "activeProvider": "postgresql",
+  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {

@@ -36,8 +36,8 @@ const UserButton = ({ user }: Props) => {
               height={45}
             />
           </DropdownMenuTrigger>
-          <DropdownMenuContent className="z-10 " align="end">
-            <div className=" m-4 px-6  py-4 rounded-lg flex flex-col gap-4 items-center bg-primary/25">
+          <DropdownMenuContent className="z-10 w-7" align="end">
+            <div className=" m-4  px-12  py-4 rounded-lg flex flex-col gap-4 items-center bg-primary/25">
               <Image
                 className={` cursor-pointer p-1 rounded-full inline `}
                 src={user?.image}
@@ -49,7 +49,7 @@ const UserButton = ({ user }: Props) => {
                 <p className="text-sm font-semibold">{user.email}</p>
                 <p className="text-sm font-medium">{user.username}</p>
               </div>
-            </div>
+            </div>{" "}
             <DropdownMenuSeparator />
             <DropdownMenuItem
               onClick={() => router.push("/dashboard/orders")}
